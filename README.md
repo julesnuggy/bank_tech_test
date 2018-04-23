@@ -1,5 +1,10 @@
 # bank_tech_test
 
+## Introduction
+This is a TDD'd implementation at Week 10 of a specification we were introduced to very early on. It allows you to make deposits to and withdrawals from a bank account, and you can print your statement.
+
+See also the [User Stories](UserStoes.md) and [Original Spec](OriginalSpec.md).
+
 ## Diagramming
 ```
 +-----------+               +---------+
@@ -7,63 +12,45 @@
 +-----------+               +---------+
 |                           |
 |#Initialize                |#Initialize
-|  -Array+-------------+    |  -Line
-|     ^                |    |    +
-|     +------+         |    |    v
-|#Desposit+-->         +--> |#Print
-|  -Amount   |              |
+|  @account+--------------> |  @account
+|     ^                     |    +
+|     +------+              |    v
+|#Desposit+--|              |#Print
+|  -amount   |              |
 |            |              |
 |            |              |
 |#Withdraw+--+              |
-+  -Amount                  +
++  -amount                  +
 ```
 
-## User Stories
-As a user,
-So that I can add money to my bank account,
-I want to be able to `#deposit` money.
+## Installation and Testing
+To install and run this app locally:
 
-As a user,
-So that I can take money fro my bank account
-I want to be able to `#withdraw` money.
+1. Clone this repo:
 
-As a user,
-So that I can check bank account,
-I want to be able to `#print` a `Statement` of my `Transaction`s.
+   `$ git clone git@github.com:julesnuggy/bank_tech_test.git`
 
-As a user,
-So that I can see when `Transaction`s happened,
-I want to be able to see the `@date` on my `Statement`.
+2. Install the gems using Bundler:
 
-As a user,
-So that I can see what my TRANSACTIONS were,
-I want to be able to see the amount `@credit`ed / `@debit`ed.
+   `$ bundle install`
 
-As a user,
-So that I know how much money I have available,
-I want to be able to see my `@balance`.
+   or manually:
 
-----------------------
+   `$ gem install rspec rubocop simplecov simplecov-console`
 
-## Original Specification
+3. Run the tests:
 
-### Requirements
+   `$ rspec && rubocop`
 
-* You should be able to interact with your code via a REPL like IRB or the JavaScript console.  (You don't need to implement a command line interface that takes input from STDIN.)
-* Deposits, withdrawal.
-* Account statement (date, amount, balance) printing.
-* Data can be kept in memory (it doesn't need to be stored to a database or anything).
+   N.B. SimpleCov is integrated with RSpec to display coverage stats.
 
-### Acceptance criteria
+## How to Use
+The app runs in a REPL such as IRB or Pry. In your REPL, you can run the following commands:
+* Transaction
+  * #new - creates a new instance of the Transaction class with an `@account` array which starts off empty
+  * #deposit(amount) - add an `amount` of money to your account
+  * #withdraw(amount) - take an `amount` of money from your account
 
-**Given** a client makes a deposit of 1000 on 10-01-2012  
-**And** a deposit of 2000 on 13-01-2012  
-**And** a withdrawal of 500 on 14-01-2012  
-**When** she prints her bank statement  
-**Then** she would see
-
-```
-date || credit || debit || balance
-14/01/2012 || || 500.00 || 2500.00
-13/01/2012 || 2000.00 || || 3000.00
-10/01/2012 || 1000.00 || || 1000.00
+* Statement
+  * #new(transaction) - creates a new instance of the Statement class, taking an instance of Transaction as an argument for dependency injection. This is used to allow access to Transaction's `@account` attribute.
+  * #print - displays your account's transactions, line by line.
