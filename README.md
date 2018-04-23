@@ -15,7 +15,7 @@
  |            |              |
  |            |              |
  |#withdraw+--+              |
- +  -Amount                  +
+ |  -Amount                  |
 
 ## User Stories
 As a user,
