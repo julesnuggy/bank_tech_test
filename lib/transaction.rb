@@ -27,7 +27,7 @@ class Transaction
   end
 
   def error_handler(amount)
-    raise ArgumentError, 'Please enter an integer' unless amount.is_a? Integer
+    raise ArgumentError, 'Please enter a number (e.g. 200, 11.23)' unless (amount.is_a? Numeric)
     raise ArgumentError, 'Please enter a positive number' if amount.negative?
   end
 end
