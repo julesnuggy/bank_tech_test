@@ -3,7 +3,7 @@ class Transaction
   attr_writer :date, :credit, :debit, :balance
 
   def initialize
-    @account = [['date || credit || debit || balance']]
+    @account = []
     @date = Time.now.strftime("%d/%m/%Y")
     @credit = @debit = @balance = 0
   end
@@ -12,13 +12,13 @@ class Transaction
     @credit = amount
     @balance += @credit
     @line = ["#{@date} || #{@credit} || || #{@balance}"]
-    @account.push(@line)
+    @account.unshift(@line)
   end
 
   def withdraw(amount)
     @debit = amount
     @balance -= @debit
     @line = ["#{@date} || || #{@debit} || #{@balance}"]
-    @account.push(@line)
+    @account.unshift(@line)
   end
 end
