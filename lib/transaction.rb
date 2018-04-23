@@ -15,4 +15,10 @@ class Transaction
     @account.push(@line)
   end
 
+  def withdraw(amount)
+    @debit = amount
+    @balance -= @debit
+    @line = ["#{@date} || || #{@debit} || #{@balance}"]
+    @account.push(@line)
+  end
 end
