@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
+# For running bank transactions
 class Transaction
   attr_reader :account
-  attr_writer :date, :credit, :debit, :balance
 
   def initialize
     @account = []
-    @date = Time.now.strftime("%d/%m/%Y")
+    @date = Time.now.strftime('%d/%m/%Y')
     @credit = @debit = @balance = 0
   end
 
