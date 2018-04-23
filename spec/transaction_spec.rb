@@ -19,8 +19,8 @@ describe Transaction do
     transaction.deposit(500)
     transaction.withdraw(200)
     transaction.deposit(250)
-    expect(transaction.account).to include(["23/04/2018 || 250 || || 550"],
-      ["23/04/2018 || || 200 || 300"], ["23/04/2018 || 500 || || 500"])
+    expect(transaction.account).to eq([["23/04/2018 || 250 || || 550"],
+      ["23/04/2018 || || 200 || 300"], ["23/04/2018 || 500 || || 500"]])
   end
 
 end

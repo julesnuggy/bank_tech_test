@@ -11,12 +11,13 @@ describe Statement do
     described_class.new(fake_transaction)
   }
 
-  it 'should #print all transactions, with the newest at the top' do
-    expect(statement.print).to eq(
-      [["date || credit || debit || balance"],
-      ["21/04/2018 || 250 || || 750"],
-      ["20/04/2018 || || 500 || 500"],
-      ["19/04/2018 || 1000 || 1000"]]
-    )
+    it 'should #print all transactions, with the newest at the top' do
+      exp = <<-EXPECTED
+date || credit || debit || balance
+21/04/2018 || 250 || || 750
+20/04/2018 || || 500 || 500
+19/04/2018 || 1000 || 1000
+      EXPECTED
+      expect{statement.print}.to output(exp).to_stdout
   end
 end
