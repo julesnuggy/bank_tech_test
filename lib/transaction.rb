@@ -10,17 +10,24 @@ class Transaction
     @credit = @debit = @balance = 0
   end
 
-  def deposit(amount)
+  def deposit(amount = 0)
+    error_handler(amount)
     @credit = amount
     @balance += @credit
     @line = ["#{@date} || #{@credit} || || #{@balance}"]
     @account.unshift(@line)
   end
 
-  def withdraw(amount)
+  def withdraw(amount = 0)
+    error_handler(amount)
     @debit = amount
     @balance -= @debit
     @line = ["#{@date} || || #{@debit} || #{@balance}"]
     @account.unshift(@line)
+  end
+
+  def error_handler(amount)
+    raise ArgumentError, 'Please enter an integer' unless amount.is_a? Integer
+    raise ArgumentError, 'Please enter a positive number' if amount.negative?
   end
 end
