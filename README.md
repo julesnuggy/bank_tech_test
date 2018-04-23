@@ -1,21 +1,22 @@
 # bank_tech_test
 
 ## Diagramming
-
- +-----------+               +---------+
- |Transaction|               |Statement|
- +-----------+               +---------+
- |                           |
- |#initialize                |#initialize
- |  -Array+-------------+    |  -Line
- |     ^                |    |    +
- |     +------+         |    |    v
- |#desposit+-->         +--> |#print
- |  -Amount   |              |
- |            |              |
- |            |              |
- |#withdraw+--+              |
- |  -Amount                  |
+```
++-----------+               +---------+
+|TRANSACTION|               |STATEMENT|
++-----------+               +---------+
+|                           |
+|#Initialize                |#Initialize
+|  -Array+-------------+    |  -Line
+|     ^                |    |    +
+|     +------+         |    |    v
+|#Desposit+-->         +--> |#Print
+|  -Amount   |              |
+|            |              |
+|            |              |
+|#Withdraw+--+              |
++  -Amount                  +
+```
 
 ## User Stories
 As a user,
