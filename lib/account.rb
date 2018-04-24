@@ -5,7 +5,8 @@ require 'Transaction'
 class Account
   attr_accessor :balance
 
-  def initialize(balance = 0)
+  def initialize(balance = 0, transaction_class = Transaction)
+    @transaction_class = transaction_class
     @account = []
     @balance = balance
   end
@@ -20,8 +21,8 @@ class Account
 
   private
 
-  def request_transaction(amount, type, transaction_class = Transaction)
-    transaction = transaction_class.new(type)
+  def request_transaction(amount, type)
+    transaction = @transaction_class.new(type)
     @balance = transaction.modify_balance(amount)
   end
 
