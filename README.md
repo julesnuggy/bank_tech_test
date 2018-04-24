@@ -1,27 +1,78 @@
-# bank_tech_test
+# Tech Test
+```
+/$$$$$$$   /$$$$$$  /$$   /$$ /$$   /$$
+| $$__  $$ /$$__  $$| $$$ | $$| $$  /$$/
+| $$  \ $$| $$  \ $$| $$$$| $$| $$ /$$/
+| $$$$$$$ | $$$$$$$$| $$ $$ $$| $$$$$/
+| $$__  $$| $$__  $$| $$  $$$$| $$  $$
+| $$  \ $$| $$  | $$| $$\  $$$| $$\  $$
+| $$$$$$$/| $$  | $$| $$ \  $$| $$ \  $$
+|_______/ |__/  |__/|__/  \__/|__/  \__/
+```
 
 ## Introduction
 This is a TDD'd implementation at Week 10 of a specification we were introduced to very early on. It allows you to make deposits to and withdrawals from a bank account, and you can print your statement.
 
-See also the [User Stories](UserStoes.md) and [Original Spec](OriginalSpec.md).
+See also the [User Stories](UserStories.md) and [Original Spec](OriginalSpec.md).
 
-## Diagramming
+## Domain Model
 ```
-+-----------+               +---------+
-|TRANSACTION|               |STATEMENT|
-+-----------+               +---------+
-|                           |
-|#Initialize                |#Initialize
-|  @account+--------------> |  @account
-|     ^                     |    +
-|     +------+              |    v
-|#Desposit+--|              |#Print
-|  -amount   |              |
-|            |              |
-|            |              |
-|#Withdraw+--+              |
-+  -amount                  +
++---------+           +-------------+             +-----------+           +-----------+
+| ACCOUNT |           | TRANSACTION |             | STATEMENT |           | FORMATTER |
++---------+           +-------------+             +-----------+           +-----------+
+
+@balance = 0 <-------+#deposit                    #print <---------------+#format_statement
++                |       |                        ^
+|                |       @credit+--+              |
+|                |                 |              |
+v                |                 |              |                       #format_date
+@history = []    |                 |              |                       +
++  ^             |                 |              |                       |
+|  |             +---+# withdraw   |              |                       |
+|  |                     |         |              |                       |
+|  +--------------------+@debit    |              |                       |
+|  |                               |              |                       |
+|  |                               |              |                       |
+|  +-------------------------------+              |                       |
+|  |                                              |                       |
+|  +-----------------+@date<----------------------------------------------+
+|                                                 |
+|                                                 |
++-------------------------------------------------+
+
+
 ```
+
+## Project Approach
+I started off by reading the specification, followed by diagramming the envisaged classes and their core methods and attributes. Following this, I set up the project (Git, gems, etc.) and then took a TDD approach to writing the app. I took the approach of writing and passing one test at a time.
+
+At the end of the first day, I got to a stage where I had a functioning program and all tests were passing, but the structure was not quite right still. There were only two classes (Transaction and Statement) and Transaction had too many responsibilities:
+1. Create the account (managing the balance and storing the history)
+2. Execute transactions (deposit and withdraw) <-- the only responsibility it should have
+3. Formatting the date
+4. Formatting the statement
+
+So on day two, I created a new class, Account, to handle account creation (by managing the balance) and history storage. This required ...
+
+Another realisation is that because of the way the objects have been encapsulated, where one class needs to influence the attributes of other classes, the code will need to return values instead of directly altering the attribute values.
+
+## Logic
+Account
+  - Opens the account with `@balance` of 0
+  - Stores the transaction `@history` array
+  - Instantiates the Transaction and Statement classes
+
+Transaction
+  - Handles `#deposit`s, which have an associated `@credit` attribute
+  - Handles `#withdraw`als, which have an associated `@debit` attribute
+  - Knows the `@date` on which these methods take place
+
+Statement
+ - `#print`s the transaction `@history` in the required format
+
+ Formatter
+ - Formats the `@statement` with `#format_statement`
+ - Formats the `@date` with `#format_date`
 
 ## Installation and Testing
 To install and run this app locally:
