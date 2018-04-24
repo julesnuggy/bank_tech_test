@@ -4,9 +4,9 @@
 class Transaction
   attr_reader :account
 
-  def initialize
+  def initialize (date = Time.now.strftime('%d/%m/%Y'))
     @account = []
-    @date = Time.now.strftime('%d/%m/%Y')
+    @date = date
     @credit = @debit = @balance = 0
   end
 

@@ -1,6 +1,32 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/julesnuggy/Documents/Coding/MA/tech_test_week/bank_tech_test/spec/account_spec.rb": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
       "/Users/julesnuggy/Documents/Coding/MA/tech_test_week/bank_tech_test/spec/statement_spec.rb": [
         null,
         null,
@@ -114,6 +140,10 @@
         null,
         null,
         1,
+        3,
+        null,
+        null,
+        1,
         1,
         1,
         1,
@@ -136,6 +166,6 @@
         null
       ]
     },
-    "timestamp": 1524505059
+    "timestamp": 1524573647
   }
 }
