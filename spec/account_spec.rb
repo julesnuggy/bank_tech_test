@@ -50,16 +50,24 @@ describe Account do
   end
 
   context 'when an invalid amount is provided' do
-    it 'should return an error for non-numerics' do
-      expect { account.send :request_transaction, 'X', :debit }.to raise_error('Not a number')
+    it 'should return an error for non-numeric deposits' do
+      expect { account.deposit('x') }.to raise_error('Not a number')
     end
 
-    it 'should return an error for negative numbers' do
-      expect { account.send :request_transaction, -10.12, :debit }.to raise_error('Negative number')
+    it 'should return an error for non-numeric withdrawals' do
+      expect { account.withdraw('x') }.to raise_error('Not a number')
+    end
+
+    it 'should return an error for negative number deposits' do
+      expect { account.deposit(-10.12) }.to raise_error('Negative number')
+    end
+
+    it 'should return an error for negative number withdrawals' do
+      expect { account.withdraw(-10.12) }.to raise_error('Negative number')
     end
 
     it 'should return an error for insufficient balance' do
-      expect { account.send :request_transaction, 1000.01, :debit }.to raise_error('Insufficient balance')
+      expect { account.withdraw(1000.01) }.to raise_error('Insufficient balance')
     end
   end
 end
