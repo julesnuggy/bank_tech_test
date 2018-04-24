@@ -10,13 +10,18 @@ class Account
     @balance = balance
   end
 
-  def deposit(amount, transaction_class = Transaction)
-    transaction = transaction_class.new(:credit)
-    @balance = transaction.modify_balance(amount)
+  def deposit(amount)
+    request_transaction(amount, :credit)
   end
 
-  def withdraw(amount, transaction_class = Transaction)
-    transaction = transaction_class.new(:debit)
+  def withdraw(amount)
+    request_transaction(amount, :debit)
+  end
+
+  private
+
+  def request_transaction(amount, type, transaction_class = Transaction)
+    transaction = transaction_class.new(type)
     @balance = transaction.modify_balance(amount)
   end
 

@@ -3,8 +3,8 @@
 require_relative '../lib/transaction.rb'
 
 describe Transaction do
-  let(:credit_transaction) { described_class.new(:credit) }
-  let(:debit_transaction) { described_class.new(:debit, 1000) }
+  subject(:credit_transaction) { described_class.new(:credit) }
+  subject(:debit_transaction) { described_class.new(:debit, 1000) }
 
   it 'should increase the calc_balance for a credit transaction' do
     # Action
