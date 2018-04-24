@@ -3,32 +3,21 @@
 require_relative '../lib/transaction.rb'
 
 describe Transaction do
-  let(:fake_date) do
-    double('fake_date', date: '23/04/2018')
+  let(:credit_transaction) { described_class.new(:credit) }
+  let(:debit_transaction) { described_class.new(:debit, 1000) }
+
+  it 'should increase the calc_balance for a credit transaction' do
+    # Action
+    credit_transaction.modify_balance(500)
+    # Assert
+    expect(credit_transaction.calc_balance).to equal(500)
   end
 
-  let(:transaction) do
-    described_class.new(fake_date)
+  it 'should decrease the calc_balance for a debit transaction' do
+    # Action
+    debit_transaction.modify_balance(200)
+    # Assert
+    expect(debit_transaction.calc_balance).to equal(800)
   end
 
-  context 'when a valid amount is provided' do
-    it 'should allow you to #deposit a credited amount to the account' do
-      transaction.deposit(500)
-      expect(transaction.account).to include(["#{fake_date} || 500 || || 500"])
-    end
-
-    it 'should allow you to #withdraw a debited amount from the account' do
-      transaction.withdraw(200)
-      expect(transaction.account).to include(["#{fake_date} || || 200 || -200"])
-    end
-
-    it 'should add lines to the account array sequentially' do
-      transaction.deposit(500)
-      transaction.withdraw(200)
-      transaction.deposit(250)
-      expect(transaction.account).to eq([["#{fake_date} || 250 || || 550"],
-                                         ["#{fake_date} || || 200 || 300"],
-                                         ["#{fake_date} || 500 || || 500"]])
-    end
-  end
 end

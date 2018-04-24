@@ -16,30 +16,54 @@ This is a TDD'd implementation at Week 10 of a specification we were introduced 
 See also the [User Stories](UserStories.md) and [Original Spec](OriginalSpec.md).
 
 ## Domain Model
+[Full Version](DomainModel.md)
+
+Simplified Version:
 ```
-+---------+           +-------------+             +-----------+           +-----------+
-| ACCOUNT |           | TRANSACTION |             | STATEMENT |           | FORMATTER |
-+---------+           +-------------+             +-----------+           +-----------+
-
-@balance = 0 <-------+#deposit                    #print <---------------+#format_statement
-+                |       |                        ^
-|                |       @credit+--+              |
-|                |                 |              |
-v                |                 |              |                       #format_date
-@history = []    |                 |              |                       +
-+  ^             |                 |              |                       |
-|  |             +---+# withdraw   |              |                       |
-|  |                     |         |              |                       |
-|  +--------------------+@debit    |              |                       |
-|  |                               |              |                       |
-|  |                               |              |                       |
-|  +-------------------------------+              |                       |
-|  |                                              |                       |
-|  +-----------------+@date<----------------------------------------------+
-|                                                 |
-|                                                 |
-+-------------------------------------------------+
-
++-----------------------------------------------------------------------------------------------------------------------+
+|                                          |                                 |                                          |
+|         +------------------+             |    +-----------------------+    |           +-------------------+          |
+|         |                  |             |    |                       |    |           |                   |          |
+|         |      ACCOUNT     |             |    |      TRANSACTION      |    |           |     STATEMENT     |          |
+|         | Controls account |             |    | Executes transactions |    |           | Generates account |          |
+|         | activity         |             |    | that modify balance   |    |           | statement         |          |
+|         |                  |             |    |                       |    |           |                   |          |
+|         +------------------+             |    +-----------------------+    |           +-------------------+          |
+|                                          |                                 |                                          |
+|  * Open an account                       | * Executes transactions         | * Executes print                         |
+|                                          |   #modify_balance(type, amount) |   #generate_statement                    |
+|    #initialize                           |     ...                         |     return @report = account.each { |tr| |
+|      @account = []                       |     return @balance+/-amount    |                        ...               |
+|      @balance = 0                        |                                 |                        TURN INTO         |
+|                                          |                                 |                        MULTILINE STRING  |
+|                                          |                                 |                        ...               |
+|                                          |                                 |                      }                   |
+|  *Request transactions                   |                                 |                                          |
+|                                          +----------------------------------------------------------------------------+
+|    #deposit(:credit, amount)             |                                                                            |
+|    #withdraw(:debit, amount)             |                                                                            |
+|      @transaction.modify_balance         |                                                                            |
+|      record(...)                         |                                                                            |
+|                                          |                                                                            |
+|                                          |                            +-----------+                                   |
+|                                          |                            |           |                                   |
+|  * Record activity                       |                            |    DATE   |                                   |
+|                                          |                            | Generates |                                   |
+|    #record(date, credit, debit, balance) |                            | date      |                                   |
+|      record = {date:_,                   |                            |           |                                   |
+|                credit:_,                 |                            +-----------+                                   |
+|                debit:_,                  |                                                                            |
+|                balance:_}                |                     * Generates date                                       |
+|                                          |                       @date = Time.now.strftime()                          |
+|                                          |                                                                            |
+|      @account.unshift(record)            |                                                                            |
+|                                          |                                                                            |
+|  * Print statement                       |                                                                            |
+|                                          |                                                                            |
+|    #print_statement(account)             |                                                                            |
+|      p @statement.generate_statement     +                                                                            |
+|                                                                                                                       |
++-----------------------------------------------------------------------------------------------------------------------+
 
 ```
 
@@ -55,6 +79,8 @@ At the end of the first day, I got to a stage where I had a functioning program 
 So on day two, I created a new class, Account, to handle account creation (by managing the balance) and history storage. This required ...
 
 Another realisation is that because of the way the objects have been encapsulated, where one class needs to influence the attributes of other classes, the code will need to return values instead of directly altering the attribute values.
+
+If I had better planned and domain modelled more thoroughly, I could have saved a lot of time.
 
 ## Logic
 Account

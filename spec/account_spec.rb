@@ -1,24 +1,32 @@
-# require_relative '../lib/account.rb'
-#
-# describe Account do
-#   let(:fake_transaction) do
-#     double('fake_transaction', balance: 0)
-#   end
-#
-#   let(:fake_transaction_deposit) do
-#     double('fake_transaction', credit: 100)
-#   end
-#
-#   let(:fake_statement) do
-#     double('fake_statement')
-#   end
-#
-#   let(:account) do
-#     described_class.new
-#   end
-#
-#   it 'should have an updated @balance when a deposit occurs' do
-#     allow(account).to receive(fake_transaction_deposit)
-#     expect(account.balance).to equal(100)
-#   end
-# end
+require_relative '../lib/account.rb'
+
+describe Account do
+  let(:account) { described_class.new(1000) }
+  let(:fake_transaction_class) { double('fake_transaction_class') }
+  let(:fake_transaction) { double('fake_transaction') }
+
+  before(:each) do
+
+  end
+
+  it 'should increase the balance when a deposit is made' do
+    # Arrange
+    allow(fake_transaction_class).to receive(:new).with(:credit).and_return(fake_transaction)
+    allow(fake_transaction).to receive(:modify_balance).and_return(1500)
+    # Action
+    account.deposit(500, fake_transaction_class)
+    # Assert
+    expect(account.balance).to equal(1500)
+  end
+
+  it 'should decrease the balance when a withdrawal is made' do
+    # Arrange
+    allow(fake_transaction_class).to receive(:new).with(:debit).and_return(fake_transaction)
+    allow(fake_transaction).to receive(:modify_balance).and_return(800)
+    # Action
+    account.withdraw(200, fake_transaction_class)
+    # Assert
+    expect(account.balance).to equal(800)
+  end
+
+end
