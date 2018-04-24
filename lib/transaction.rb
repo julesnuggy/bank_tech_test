@@ -2,8 +2,8 @@
 
 # Executes transactions on the account
 class Transaction
-  attr_accessor :type, :calc_balance
-  
+  attr_reader :type, :calc_balance
+
   def initialize(type, calc_balance = 0)
     @type = type
     @calc_balance = calc_balance

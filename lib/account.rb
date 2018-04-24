@@ -2,7 +2,7 @@
 
 # Controls account activity
 class Account
-  attr_accessor :balance
+  attr_reader :balance
 
   def initialize(balance = 0, transaction_class = Transaction)
     @transaction_class = transaction_class
