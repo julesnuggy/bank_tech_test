@@ -6,7 +6,6 @@ class Account
 
   def initialize(balance = 0, transaction_class = Transaction)
     @transaction_class = transaction_class
-    @account = []
     @balance = balance
   end
 

@@ -1,25 +1,20 @@
 # frozen_string_literal: true
-# 
-# require_relative '../lib/statement.rb'
-#
-# describe Statement do
-#   let(:fake_transaction) do
-#     double('fake_transaction', account: [['21/04/2018 || 250 || || 750'],
-#                                          ['20/04/2018 || || 500 || 500'],
-#                                          ['19/04/2018 || 1000 || 1000']])
-#   end
-#
-#   let(:statement) do
-#     described_class.new(fake_transaction)
-#   end
-#
-#   it 'should #print all transactions, with the newest at the top' do
-#     exp = <<~EXPECTED
-#       date || credit || debit || balance
-#       21/04/2018 || 250 || || 750
-#       20/04/2018 || || 500 || 500
-#       19/04/2018 || 1000 || 1000
-#       EXPECTED
-#     expect { statement.print }.to output(exp).to_stdout
-#   end
-# end
+
+require_relative '../lib/statement.rb'
+
+describe Statement do
+  let(:credit_transaction) { double('credit_transaction', type: :credit, calc_amount: 100, calc_balance: 100) }
+  let(:statement) { described_class.new() }
+
+  it 'records each transaction that takes place' do
+    statement.record(credit_transaction, '21/04/2018')
+    expect(statement.transaction_record).to eq( {
+        date: '21/04/2018',
+        credit: 100,
+        debit: nil,
+        balance: 100
+      }
+    )
+  end
+
+end
