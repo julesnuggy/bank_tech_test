@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/account.rb'
 
 describe Account do
@@ -20,7 +22,7 @@ describe Account do
       allow(fake_transaction_class).to receive(:new).with(:credit).and_return(fake_transaction)
       allow(fake_transaction).to receive(:modify_balance).and_return(1500)
       # Action
-      account.send :request_transaction, "500", :credit
+      account.send :request_transaction, 500, :credit
       # Assert
       expect(account.balance).to equal(1500)
     end
@@ -41,10 +43,23 @@ describe Account do
       allow(fake_transaction_class).to receive(:new).with(:debit).and_return(fake_transaction)
       allow(fake_transaction).to receive(:modify_balance).and_return(800)
       # Action
-      account.send :request_transaction, "200", :debit
+      account.send :request_transaction, 200, :debit
       # Assert
       expect(account.balance).to equal(800)
     end
   end
 
+  context 'when an invalid amount is provided' do
+    it 'should return an error for non-numerics' do
+      expect { account.send :request_transaction, 'X', :debit }.to raise_error('Not a number')
+    end
+
+    it 'should return an error for negative numbers' do
+      expect { account.send :request_transaction, -10.12, :debit }.to raise_error('Negative number')
+    end
+
+    it 'should return an error for insufficient balance' do
+      expect { account.send :request_transaction, 1000.01, :debit }.to raise_error('Insufficient balance')
+    end
+  end
 end

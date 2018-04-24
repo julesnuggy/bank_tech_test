@@ -22,6 +22,9 @@ class Account
   private
 
   def request_transaction(amount, type)
+    raise 'Not a number' unless amount.is_a? Numeric
+    raise 'Negative number' unless amount.positive?
+    raise 'Insufficient balance' unless (amount <= balance)
     transaction = @transaction_class.new(type)
     @balance = transaction.modify_balance(amount)
   end
