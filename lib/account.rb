@@ -10,14 +10,14 @@ class Account
     @balance = balance
   end
 
-  def deposit(amount, type = :credit)
-    error_handler(amount, type)
-    request_transaction(amount, type)
+  def deposit(amount)
+    error_handler(amount, :credit)
+    request_transaction(amount, :credit)
   end
 
-  def withdraw(amount, type = :debit)
-    error_handler(amount, type)
-    request_transaction(amount, type)
+  def withdraw(amount)
+    error_handler(amount, :debit)
+    request_transaction(amount, :debit)
   end
 
   private
