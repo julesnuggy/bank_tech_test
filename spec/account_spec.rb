@@ -26,14 +26,25 @@ describe Account do
     end
   end
 
-  it 'should decrease the balance when a withdrawal is made' do
-    # Arrange
-    allow(fake_transaction_class).to receive(:new).with(:debit).and_return(fake_transaction)
-    allow(fake_transaction).to receive(:modify_balance).and_return(800)
-    # Action
-    account.send :request_transaction, "200", :debit
-    # Assert
-    expect(account.balance).to equal(800)
+  context 'when a #withdrawal is made' do
+    it 'should decrease the balance (via public method)' do
+      # Arrange
+      allow(fake_transaction_class).to receive(:new).with(:debit).and_return(fake_transaction)
+      # Action
+      expect(fake_transaction).to receive(:modify_balance).and_return(800)
+      # Assert
+      account.withdraw(200)
+    end
+
+    it 'should decrease the balance (via private method)' do
+      # Arrange
+      allow(fake_transaction_class).to receive(:new).with(:debit).and_return(fake_transaction)
+      allow(fake_transaction).to receive(:modify_balance).and_return(800)
+      # Action
+      account.send :request_transaction, "200", :debit
+      # Assert
+      expect(account.balance).to equal(800)
+    end
   end
 
 end
