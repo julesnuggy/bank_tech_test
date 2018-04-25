@@ -10,8 +10,6 @@ class Transaction
     @type = type
     @calc_balance = calc_balance
     @calc_amount = calc_amount
-    @this_transaction = { type: type, calc_amount: calc_amount,
-                          calc_balance: calc_balance }
   end
 
   def modify_balance(amount)
@@ -23,7 +21,9 @@ class Transaction
     end
   end
 
-  def record_transaction(transaction = this_transaction)
-    @recorded_transaction = @statement.record(transaction)
+  def record_transaction
+    @this_transaction = { type: type, calc_amount: calc_amount,
+                          calc_balance: calc_balance }
+    @recorded_transaction = @statement.record(this_transaction)
   end
 end

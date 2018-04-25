@@ -29,8 +29,9 @@ class Account
 
   def request_transaction(amount, type)
     transaction = @transaction_class.new(statement, type, balance)
+    @balance = transaction.modify_balance(amount)
     transaction.record_transaction
-    @balance = transaction.modify_balance(amount).round(2)
+    balance
   end
 
   def error_handler(amount, type)
