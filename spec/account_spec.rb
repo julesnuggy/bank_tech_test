@@ -11,13 +11,17 @@ describe Account do
 
   subject(:account) { described_class.new(1000, fake_transaction_class, fake_statement_class) }
 
+  before(:each) do
+    allow(fake_statement_class).to receive(:new).and_return(fake_statement)
+  end
+
   context 'when a #deposit is made' do
     before(:each) do
       # Arrange
-      allow(fake_statement_class).to receive(:new).and_return(fake_statement)
       allow(fake_transaction_class).to receive(:new).with(
         fake_statement, :credit, account.balance
       ).and_return(fake_transaction)
+      allow(fake_transaction).to receive(:record_transaction)
     end
 
     it 'should increase the balance (via public method)' do
@@ -41,10 +45,10 @@ describe Account do
   context 'when a #withdrawal is made' do
     before(:each) do
       # Arrange
-      allow(fake_statement_class).to receive(:new).and_return(fake_statement)
-      allow(fake_transaction_class).to receive(
-        :new
-      ).with(fake_statement, :debit, account.balance).and_return(fake_transaction)
+      allow(fake_transaction_class).to receive(:new).with(
+        fake_statement, :debit, account.balance
+      ).and_return(fake_transaction)
+      allow(fake_transaction).to receive(:record_transaction)
     end
 
     it 'should decrease the balance (via public method)' do
@@ -65,6 +69,7 @@ describe Account do
   end
 
   context 'when an invalid amount is provided' do
+
     it 'should return an error for non-numeric deposits' do
       expect { account.deposit('x') }.to raise_error('Not a number')
     end

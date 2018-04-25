@@ -2,13 +2,13 @@
 
 # Controls account activity
 class Account
-  attr_reader :balance
+  attr_reader :balance, :statement
 
   def initialize(balance = 0, transaction_class = Transaction,
                  statement_class = Statement)
     @balance = balance
     @transaction_class = transaction_class
-    @statement_class = statement_class
+    @statement = statement_class.new
   end
 
   def deposit(amount)
@@ -24,8 +24,8 @@ class Account
   private
 
   def request_transaction(amount, type)
-    statement = @statement_class.new
     transaction = @transaction_class.new(statement, type, balance)
+    transaction.record_transaction
     @balance = transaction.modify_balance(amount).round(2)
   end
 

@@ -2,18 +2,21 @@
 
 # Manages account history
 class Statement
-  attr_reader :transaction_record, :date, :credit, :debit, :balance
+  attr_reader :transaction_history, :transaction_record, :date,
+              :credit, :debit, :balance
 
   def initialize
-    @transaction_record = {
-      date: date,
-      credit: credit,
-      debit: debit,
-      balance: balance
-    }
+    @transaction_history = []
   end
 
   def record(transaction, date = Date.new.date)
+    @transaction_record = {
+      date: nil,
+      credit: nil,
+      debit: nil,
+      balance: nil
+    }
+    
     @date = date
     @transaction_record[:date] = date
     @transaction_record[:credit] = transaction.calc_amount if
@@ -21,6 +24,6 @@ class Statement
     @transaction_record[:debit] = transaction.calc_amount if
                                   transaction.type == :debit
     @transaction_record[:balance] = transaction.calc_balance
-    transaction_record
+    @transaction_history.unshift(transaction_record.dup)
   end
 end
