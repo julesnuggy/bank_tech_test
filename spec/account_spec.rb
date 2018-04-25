@@ -100,18 +100,6 @@ describe Account do
 
     it 'displays a list of all transactions that have happened to date' do
       # Arrange
-      expect(fake_transaction).to receive(:modify_balance).and_return(1000)
-      account.deposit(1000)
-
-      expect(fake_transaction).to receive(:modify_balance).and_return(100.55)
-      account.deposit(100.55)
-
-      allow(fake_transaction_class).to receive(:new).with(
-        fake_statement, :debit, account.balance
-      ).and_return(fake_transaction)
-      expect(fake_transaction).to receive(:modify_balance).and_return(99.32)
-      account.withdraw(99.32)
-
       report = <<~EXPECTED
         date || credit || debit || balance
         21/04/2018 || 250 || || 750
