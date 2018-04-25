@@ -80,6 +80,8 @@ So on day two, I created a new class, Account, to handle account creation (by ma
 
 Another realisation is that because of the way the objects have been encapsulated, where one class needs to influence the attributes of other classes, the code will need to return values instead of directly altering the attribute values.
 
+Shouldn't be allowed to modify the attributes directly across classes because otherwise people could make fake transactions to wrongly influence their account.
+
 If I had better planned and domain modelled more thoroughly, I could have saved a lot of time.
 
 ## Logic

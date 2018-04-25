@@ -19,6 +19,6 @@ class Statement
     @transaction_record[:credit] = transaction.calc_amount if transaction.type == :credit
     @transaction_record[:debit] = transaction.calc_amount if transaction.type == :debit
     @transaction_record[:balance] = transaction.calc_balance
-    return transaction_record
+    transaction_record
   end
 end

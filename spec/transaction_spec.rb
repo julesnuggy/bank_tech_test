@@ -3,8 +3,11 @@
 require_relative '../lib/transaction.rb'
 
 describe Transaction do
-  subject(:credit_transaction) { described_class.new(:credit) }
-  subject(:debit_transaction) { described_class.new(:debit, 1000) }
+  let(:fake_statement) { double('fake_statement')}
+
+  subject(:credit_transaction) { described_class.new(fake_statement, :credit) }
+  subject(:debit_transaction) { described_class.new(fake_statement, :debit, 1000) }
+  subject(:transaction_to_record) {described_class.new(fake_statement, :credit, 1000, 100)}
 
   context 'a credit transaction' do
     it 'should increase the calc_balance' do
@@ -35,6 +38,32 @@ describe Transaction do
       debit_transaction.modify_balance(50.13)
       # Assert
       expect(debit_transaction.calc_balance).to equal(949.87)
+    end
+  end
+
+  context 'recording a transaction' do
+    # Fake object which Statement would return when #record is run
+    let(:fake_statement_record_transaction) { {
+        date: '21/04/2018',
+        credit: 100,
+        debit: nil,
+        balance: 1000
+      }
+    }
+
+    it 'should return a record of the transaction' do
+      # Arrange
+      allow(fake_statement).to receive(:record).and_return(fake_statement_record_transaction)
+      # Action
+      transaction_to_record.record_transaction
+      # Assert
+      expect(transaction_to_record.recorded_transaction).to eq( {
+          date: '21/04/2018',
+          credit: 100,
+          debit: nil,
+          balance: 1000
+        }
+      )
     end
   end
 end
