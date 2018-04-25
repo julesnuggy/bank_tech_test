@@ -51,6 +51,7 @@ describe Statement do
       statement.record(credit_transaction, '21/04/2018')
       statement.record(debit_transaction, '22/04/2018')
       report = <<~EXPECTED
+        date || credit || debit || balance
         22/04/2018 || || 50 || 50
         21/04/2018 || 100 || || 100
         EXPECTED
