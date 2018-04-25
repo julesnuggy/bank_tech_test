@@ -3,7 +3,7 @@
 require_relative '../lib/account.rb'
 
 describe Account do
-  let(:fake_statement_class) { double('fake_statement_class')}
+  let(:fake_statement_class) { double('fake_statement_class') }
   let(:fake_statement) { double('fake_statement') }
 
   let(:fake_transaction_class) { double('fake_transaction_class') }
@@ -15,7 +15,9 @@ describe Account do
     before(:each) do
       # Arrange
       allow(fake_statement_class).to receive(:new).and_return(fake_statement)
-      allow(fake_transaction_class).to receive(:new).with(fake_statement, :credit, account.balance).and_return(fake_transaction)
+      allow(fake_transaction_class).to receive(:new).with(
+        fake_statement, :credit, account.balance
+      ).and_return(fake_transaction)
     end
 
     it 'should increase the balance (via public method)' do
@@ -38,7 +40,9 @@ describe Account do
     before(:each) do
       # Arrange
       allow(fake_statement_class).to receive(:new).and_return(fake_statement)
-      allow(fake_transaction_class).to receive(:new).with(fake_statement, :debit, account.balance).and_return(fake_transaction)
+      allow(fake_transaction_class).to receive(
+        :new
+      ).with(fake_statement, :debit, account.balance).and_return(fake_transaction)
     end
 
     it 'should decrease the balance (via public method)' do

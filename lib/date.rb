@@ -7,5 +7,4 @@ class Date
   def initialize(date = Time.now)
     @date = date.strftime('%d/%m/%Y')
   end
-
 end

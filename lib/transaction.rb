@@ -2,14 +2,16 @@
 
 # Executes transactions on the account
 class Transaction
-  attr_reader :type, :calc_balance, :calc_amount, :this_transaction, :recorded_transaction
+  attr_reader :type, :calc_balance, :calc_amount,
+              :this_transaction, :recorded_transaction
 
   def initialize(statement, type, calc_balance = 0, calc_amount = 0)
     @statement = statement
     @type = type
     @calc_balance = calc_balance
     @calc_amount = calc_amount
-    @this_transaction = {type: type, calc_amount: calc_amount, calc_balance: calc_balance}
+    @this_transaction = { type: type, calc_amount: calc_amount,
+                          calc_balance: calc_balance }
   end
 
   def modify_balance(amount)

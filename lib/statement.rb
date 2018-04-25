@@ -16,8 +16,10 @@ class Statement
   def record(transaction, date = Date.new.date)
     @date = date
     @transaction_record[:date] = date
-    @transaction_record[:credit] = transaction.calc_amount if transaction.type == :credit
-    @transaction_record[:debit] = transaction.calc_amount if transaction.type == :debit
+    @transaction_record[:credit] = transaction.calc_amount if
+                                   transaction.type == :credit
+    @transaction_record[:debit] = transaction.calc_amount if
+                                  transaction.type == :debit
     @transaction_record[:balance] = transaction.calc_balance
     transaction_record
   end

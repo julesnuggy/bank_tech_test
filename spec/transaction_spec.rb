@@ -3,11 +3,11 @@
 require_relative '../lib/transaction.rb'
 
 describe Transaction do
-  let(:fake_statement) { double('fake_statement')}
+  let(:fake_statement) { double('fake_statement') }
 
   subject(:credit_transaction) { described_class.new(fake_statement, :credit) }
   subject(:debit_transaction) { described_class.new(fake_statement, :debit, 1000) }
-  subject(:transaction_to_record) {described_class.new(fake_statement, :credit, 1000, 100)}
+  subject(:transaction_to_record) { described_class.new(fake_statement, :credit, 1000, 100) }
 
   context 'a credit transaction' do
     it 'should increase the calc_balance' do
@@ -43,13 +43,14 @@ describe Transaction do
 
   context 'recording a transaction' do
     # Fake object which Statement would return when #record is run
-    let(:fake_statement_record_transaction) { {
+    let(:fake_statement_record_transaction) do
+      {
         date: '21/04/2018',
         credit: 100,
         debit: nil,
         balance: 1000
       }
-    }
+    end
 
     it 'should return a record of the transaction' do
       # Arrange
@@ -57,12 +58,11 @@ describe Transaction do
       # Action
       transaction_to_record.record_transaction
       # Assert
-      expect(transaction_to_record.recorded_transaction).to eq( {
-          date: '21/04/2018',
-          credit: 100,
-          debit: nil,
-          balance: 1000
-        }
+      expect(transaction_to_record.recorded_transaction).to eq(
+        date: '21/04/2018',
+        credit: 100,
+        debit: nil,
+        balance: 1000
       )
     end
   end

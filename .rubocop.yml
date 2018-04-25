@@ -1,2 +1,11 @@
 AllCops:
   TargetRubyVersion: 2.5
+
+Metrics/LineLength:
+  Max: 80
+  Exclude:
+    - spec/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
