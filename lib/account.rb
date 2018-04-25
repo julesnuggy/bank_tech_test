@@ -1,11 +1,11 @@
 # frozen_string_literal: true
-
+require 'transaction'
+require 'statement'
 # Controls account activity
 class Account
   attr_reader :balance
 
-  def initialize(balance = 0, transaction_class = Transaction,
-  statement_class = Statement)
+  def initialize(balance = 0, transaction_class = Transaction, statement_class = Statement)
     @balance = balance
     @transaction_class = transaction_class
     @statement_class = statement_class
@@ -24,7 +24,8 @@ class Account
   private
 
   def request_transaction(amount, type)
-    transaction = @transaction_class.new(@statement_class.new, type, balance)
+    statement = @statement_class.new
+    transaction = @transaction_class.new(statement, type, balance)
     @balance = transaction.modify_balance(amount)
   end
 
