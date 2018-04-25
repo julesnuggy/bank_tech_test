@@ -2,15 +2,13 @@
 
 # Executes account statement operations
 class Statement
-  attr_reader :transaction_report, :transaction_history, :transaction_record,
-              :date, :credit, :debit, :balance
+  attr_reader :transaction_report, :transaction_history, :transaction_record
 
   def initialize
     @transaction_history = []
   end
 
   def record(transaction, date = Date.new.date)
-    transaction
     @transaction_record = { date: nil, credit: nil, debit: nil, balance: nil }
     @date = date
     @transaction_record[:date] = date

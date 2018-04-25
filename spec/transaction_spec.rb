@@ -65,9 +65,9 @@ describe Transaction do
       # Arrange
       allow(fake_statement).to receive(:record).and_return(fake_statement_record_transaction)
       # Action
-      transaction_to_record.record_transaction
+      recorded_transaction = transaction_to_record.record_transaction
       # Assert
-      expect(transaction_to_record.recorded_transaction).to eq(
+      expect(recorded_transaction).to eq(
         date: '21/04/2018',
         credit: 100,
         debit: nil,
