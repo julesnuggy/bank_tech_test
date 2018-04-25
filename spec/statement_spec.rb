@@ -9,11 +9,15 @@ describe Statement do
 
   context 'recording a transaction' do
     before(:each) do
+      # Arrange
       statement.record(credit_transaction, '21/04/2018')
     end
 
     it 'records a transaction when it takes place' do
-      expect(statement.transaction_record).to eq({
+      # Action
+      expect_record = statement.transaction_record
+      # Assert
+      expect(expect_record).to eq({
         date: '21/04/2018',
         credit: 100,
         debit: nil,
@@ -22,8 +26,12 @@ describe Statement do
     end
 
     it 'saves that transaction to the history' do
+      # Arrange
       statement.record(debit_transaction, '22/04/2018')
-      expect(statement.transaction_history).to eq([{
+      # Action
+      expect_record = statement.transaction_history
+      # Assert
+      expect(expect_record).to eq([{
         date: '22/04/2018',
         credit: nil,
         debit: 50,
@@ -35,9 +43,21 @@ describe Statement do
         balance: 100
       }])
     end
-
   end
-  it 'generates a statement report of all transactions' do
 
+  context 'generating transaction history report' do
+    it 'generates a report of all transactions' do
+      # Arrange
+      statement.record(credit_transaction, '21/04/2018')
+      statement.record(debit_transaction, '22/04/2018')
+      report = <<~EXPECTED
+        22/04/2018 ||  || 50 || 50
+        21/04/2018 || 100 ||  || 100
+        EXPECTED
+      # Action
+      statement.generate_report
+      # Assert
+      expect(statement.transaction_report).to eq(report)
+    end
   end
 end

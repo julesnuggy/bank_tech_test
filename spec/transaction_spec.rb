@@ -28,8 +28,9 @@ describe Transaction do
       # Arrange
       credit_transaction.modify_balance(11.11)
       # Action
+      expect_balance = credit_transaction.modify_balance(11.15)
       # Assert
-      expect(credit_transaction.modify_balance(11.15)).to eq(22.26)
+      expect(expect_balance).to eq(22.26)
     end
   end
 
