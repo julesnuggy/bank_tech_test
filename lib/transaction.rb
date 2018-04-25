@@ -1,33 +1,29 @@
 # frozen_string_literal: true
 
-# For running bank transactions
+# Executes transactions on the account
 class Transaction
-  attr_reader :account
+  attr_reader :type, :calc_balance, :calc_amount,
+              :this_transaction
 
-  def initialize
-    @account = []
-    @date = Time.now.strftime('%d/%m/%Y')
-    @credit = @debit = @balance = 0
+  def initialize(statement, type, calc_balance = 0, calc_amount = 0)
+    @statement = statement
+    @type = type
+    @calc_balance = calc_balance
+    @calc_amount = calc_amount
   end
 
-  def deposit(amount = 0)
-    error_handler(amount)
-    @credit = amount
-    @balance += @credit
-    @line = ["#{@date} || #{@credit} || || #{@balance}"]
-    @account.unshift(@line)
+  def modify_balance(amount)
+    @calc_amount = amount
+    if type == :credit
+      (@calc_balance += calc_amount).round(2)
+    elsif type == :debit
+      (@calc_balance -= calc_amount).round(2)
+    end
   end
 
-  def withdraw(amount = 0)
-    error_handler(amount)
-    @debit = amount
-    @balance -= @debit
-    @line = ["#{@date} || || #{@debit} || #{@balance}"]
-    @account.unshift(@line)
-  end
-
-  def error_handler(amount)
-    raise ArgumentError, 'Please enter a number (e.g. 200, 11.23)' unless (amount.is_a? Numeric)
-    raise ArgumentError, 'Please enter a positive number' if amount.negative?
+  def record_transaction
+    @this_transaction = { type: type, calc_amount: calc_amount,
+                          calc_balance: calc_balance }
+    @statement.record(this_transaction)
   end
 end
