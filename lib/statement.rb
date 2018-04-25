@@ -25,6 +25,7 @@ class Statement
   def generate_report
     transaction_history.each { |record|
       @transaction_report += "#{record[:date]} || #{record[:credit]} || #{record[:debit]} || #{record[:balance]}\n"
+      @transaction_report.gsub!(/  /, ' ')
     }
     transaction_report
   end
