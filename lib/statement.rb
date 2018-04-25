@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Manages account statement activities
+# Executes account statement operations
 class Statement
   attr_reader :transaction_report, :transaction_history, :transaction_record,
               :date, :credit, :debit, :balance
@@ -23,10 +23,11 @@ class Statement
 
   def generate_report
     @transaction_report = "date || credit || debit || balance\n"
-    transaction_history.each { |record|
-      @transaction_report += "#{record[:date]} || #{record[:credit]} || #{record[:debit]} || #{record[:balance]}\n"
+    transaction_history.each do |record|
+      @transaction_report +=
+        "#{record[:date]} || #{record[:credit]} || #{record[:debit]} || #{record[:balance]}\n"
       @transaction_report.gsub!(/  /, ' ')
-    }
+    end
     transaction_report
   end
 end

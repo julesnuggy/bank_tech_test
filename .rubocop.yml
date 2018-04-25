@@ -2,7 +2,7 @@ AllCops:
   TargetRubyVersion: 2.5
 
 Metrics/LineLength:
-  Max: 80
+  Max: 95
   Exclude:
     - spec/**/*
 

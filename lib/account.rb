@@ -21,6 +21,10 @@ class Account
     request_transaction(amount, :debit)
   end
 
+  def print_statement
+    puts statement.generate_report
+  end
+
   private
 
   def request_transaction(amount, type)

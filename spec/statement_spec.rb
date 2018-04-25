@@ -17,12 +17,12 @@ describe Statement do
       # Action
       expect_record = statement.transaction_record
       # Assert
-      expect(expect_record).to eq({
+      expect(expect_record).to eq(
         date: '21/04/2018',
         credit: 100,
         debit: nil,
         balance: 100
-      })
+      )
     end
 
     it 'saves that transaction to the history' do
@@ -32,16 +32,16 @@ describe Statement do
       expect_record = statement.transaction_history
       # Assert
       expect(expect_record).to eq([{
-        date: '22/04/2018',
-        credit: nil,
-        debit: 50,
-        balance: 50
-      }, {
-        date: '21/04/2018',
-        credit: 100,
-        debit: nil,
-        balance: 100
-      }])
+                                    date: '22/04/2018',
+                                    credit: nil,
+                                    debit: 50,
+                                    balance: 50
+                                  }, {
+                                    date: '21/04/2018',
+                                    credit: 100,
+                                    debit: nil,
+                                    balance: 100
+                                  }])
     end
   end
 

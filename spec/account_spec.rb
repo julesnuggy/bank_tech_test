@@ -39,7 +39,6 @@ describe Account do
       # Assert
       expect(account.balance).to eq(1500)
     end
-
   end
 
   context 'when a #withdrawal is made' do
@@ -69,7 +68,6 @@ describe Account do
   end
 
   context 'when an invalid amount is provided' do
-
     it 'should return an error for non-numeric deposits' do
       expect { account.deposit('x') }.to raise_error('Not a number')
     end
@@ -88,6 +86,42 @@ describe Account do
 
     it 'should return an error for insufficient balance' do
       expect { account.withdraw(1000.01) }.to raise_error('Insufficient balance')
+    end
+  end
+
+  context 'when a print statement request is made' do
+    before(:each) do
+      # Arrange
+      allow(fake_transaction_class).to receive(:new).with(
+        fake_statement, :credit, account.balance
+      ).and_return(fake_transaction)
+      allow(fake_transaction).to receive(:record_transaction)
+    end
+
+    it 'displays a list of all transactions that have happened to date' do
+      # Arrange
+      expect(fake_transaction).to receive(:modify_balance).and_return(1000)
+      account.deposit(1000)
+
+      expect(fake_transaction).to receive(:modify_balance).and_return(100.55)
+      account.deposit(100.55)
+
+      allow(fake_transaction_class).to receive(:new).with(
+        fake_statement, :debit, account.balance
+      ).and_return(fake_transaction)
+      expect(fake_transaction).to receive(:modify_balance).and_return(99.32)
+      account.withdraw(99.32)
+
+      report = <<~EXPECTED
+        date || credit || debit || balance
+        21/04/2018 || 250 || || 750
+        20/04/2018 || || 500 || 500
+        19/04/2018 || 1000 || 1000
+        EXPECTED
+      # Action
+      expect(fake_statement).to receive(:generate_report).and_return(report)
+      # Assert
+      expect { account.print_statement }.to output(report).to_stdout
     end
   end
 end
