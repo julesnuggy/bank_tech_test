@@ -23,6 +23,14 @@ describe Transaction do
       # Assert
       expect(credit_transaction.calc_balance).to equal(88.13)
     end
+
+    it 'should return a number rounded to 2 decimal places' do
+      # Arrange
+      credit_transaction.modify_balance(11.11)
+      # Action
+      # Assert
+      expect(credit_transaction.modify_balance(11.15)).to eq(22.26)
+    end
   end
 
   context 'a debit transaction' do

@@ -17,9 +17,9 @@ class Transaction
   def modify_balance(amount)
     @calc_amount = amount
     if type == :credit
-      @calc_balance += calc_amount
+      (@calc_balance += calc_amount).round(2)
     elsif type == :debit
-      @calc_balance -= calc_amount
+      (@calc_balance -= calc_amount).round(2)
     end
   end
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'transaction'
-require 'statement'
 # Controls account activity
 class Account
   attr_reader :balance
@@ -28,7 +26,7 @@ class Account
   def request_transaction(amount, type)
     statement = @statement_class.new
     transaction = @transaction_class.new(statement, type, balance)
-    @balance = transaction.modify_balance(amount)
+    @balance = transaction.modify_balance(amount).round(2)
   end
 
   def error_handler(amount, type)

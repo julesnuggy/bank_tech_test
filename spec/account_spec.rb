@@ -23,8 +23,9 @@ describe Account do
     it 'should increase the balance (via public method)' do
       # Action
       expect(fake_transaction).to receive(:modify_balance).and_return(1500)
-      # Assert
       account.deposit(500)
+      # Assert
+      expect(account.balance).to eq(1500)
     end
 
     it 'should increase the balance (via private method)' do
@@ -34,6 +35,7 @@ describe Account do
       # Assert
       expect(account.balance).to eq(1500)
     end
+
   end
 
   context 'when a #withdrawal is made' do
@@ -48,8 +50,9 @@ describe Account do
     it 'should decrease the balance (via public method)' do
       # Action
       expect(fake_transaction).to receive(:modify_balance).and_return(800)
-      # Assert
       account.withdraw(200)
+      # Assert
+      expect(account.balance).to eq(800)
     end
 
     it 'should decrease the balance (via private method)' do
