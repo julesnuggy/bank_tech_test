@@ -16,7 +16,7 @@ This is a TDD'd implementation at Week 10 of a specification we were introduced 
 See the [User Stories](UserStories.md) and [Original Spec](OriginalSpec.md).
 
 ## Domain Model
-![Screenshot](/assets/Tech Test - Bank - Domain Model.png)
+![Screenshot](https://github.com/julesnuggy/bank_tech_test/blob/master/assets/Tech%20Test%20-%20Bank%20-%20Domain%20Model.png)
 
 ## Project Approach
 I started off by reading the specification, followed by diagramming the envisaged classes and their core methods and attributes. Following this, I set up the project (Git, gems, etc.) and then took a TDD approach to writing the app. I took the approach of creating one feature at a time by writing and passing one test at a time (Red -> Green -> Refactor).
@@ -61,7 +61,7 @@ The app runs in a REPL such as IRB or Pry. A user need only interact with the Ac
 5. View statement `acc.print_statement`
 
 ## Example Screenshot
-![Screenshot](/assets/Tech Test - Bank - Screenshot.png)
+![Screenshot](https://github.com/julesnuggy/bank_tech_test/blob/master/assets/Tech%20Test%20-%20Bank%20-%20Screenshot.png)
 
 ## Installation and Testing
 To install and run this app locally:
