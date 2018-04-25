@@ -3,7 +3,7 @@
 require_relative '../lib/statement.rb'
 
 describe Statement do
-  let(:credit_transaction) { { type: :credit, calc_amount: 100, calc_balance: 100} }
+  let(:credit_transaction) { { type: :credit, calc_amount: 100, calc_balance: 100 } }
   let(:debit_transaction) { { type: :debit, calc_amount: 50, calc_balance: 50 } }
   let(:statement) { described_class.new }
 
